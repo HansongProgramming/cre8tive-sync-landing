@@ -3,8 +3,8 @@ const Hero: React.FC = () => {
     <section className="hero">
       <div className="hero__inner">
         <h1 className="hero__title">
-          Be Creative 
-          Start the Sync
+          Be Creative
+          StaRt The SynC
         </h1>
 
         <p className="hero__subtitle">
@@ -19,6 +19,9 @@ const Hero: React.FC = () => {
           <button className="hero__btn hero__btn--secondary">
             Our Vision
           </button>
+        </div>
+        <div className="hero_awards">
+          <img src="/Awards.svg" alt="" />
         </div>
       </div>
     </section>
