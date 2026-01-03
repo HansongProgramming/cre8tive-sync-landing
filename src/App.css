@@ -14,13 +14,28 @@
 }
 
 body {
-  background-image: url("/Background.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  min-height: 100vh;
   margin: 0;
 }
+
+/* Background layer */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background-image: url("/Background.png");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: contain;
+
+  transform: scale(1.5); 
+  transform-origin: bottom center;
+
+  z-index: -1;
+  pointer-events: none;
+}
+
+
 
 .header {
   color: white;
