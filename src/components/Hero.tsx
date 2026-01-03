@@ -3,7 +3,8 @@ const Hero: React.FC = () => {
     <section className="hero">
       <div className="hero__inner">
         <h1 className="hero__title">
-          Be Creative. Start the Sync.
+          Be Creative 
+          Start the Sync
         </h1>
 
         <p className="hero__subtitle">
