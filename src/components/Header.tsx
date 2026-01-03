@@ -2,7 +2,10 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <nav>
-        <div className="logo">Creative Sync</div>
+        <div className="logo">
+          <img src="/Cre8tiveSyncLogo.svg" alt="" />
+          Creative Sync
+        </div>
 
         <ul>
           <li><a href="#projects">Projects</a></li>

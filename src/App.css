@@ -17,18 +17,28 @@ body {
   background-image: url("/Background.png");
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: bottom center;
   min-height: 100vh;
+  margin: 0;
 }
 
 .header {
   color: white;
+  font-family: "Roboto";
+  font-weight: 300;
+  padding: 1rem;
+}
+
+.logo{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .header nav {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,8 +56,17 @@ body {
 }
 
 .header button {
-  padding: 10px 16px;
+  padding: 0.50rem 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
+  border-radius: 35px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-family: "Roboto";
+  font-weight: 300;
+  border: 1px solid white;
+  box-shadow: rgba(0,0,0,0.5) 1px 2px 5px;
+  letter-spacing: 0.05rem;
 }
 
 /* =========================
@@ -66,6 +85,13 @@ body {
   max-width: 900px;
   padding: 2rem;
   text-align: center;
+}
+
+.hero_title_container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3rem;
 }
 
 .hero__title {
@@ -96,7 +122,7 @@ body {
 }
 
 .hero__btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.50rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
   border-radius: 35px;
@@ -106,6 +132,7 @@ body {
   font-weight: 300;
   border: 1px solid white;
   box-shadow: rgba(0,0,0,0.5) 1px 2px 5px;
+  letter-spacing: 0.05rem;
 }
 
 .hero_awards{
