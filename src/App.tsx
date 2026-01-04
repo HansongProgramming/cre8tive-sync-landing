@@ -13,8 +13,8 @@ const LandingPage: React.FC = () => {
       <Header />
       <main>
         <Hero />
-        <Projects />
         <Values />
+        <Projects />
         <Awards />
         <Contact />
       </main>
