@@ -4,8 +4,8 @@ const Values: React.FC = () => {
     const values = [
         {
             icon: "⚙️",
-            title: "Precision & Quality",
-            description: "Every line of code, every pixel, and every interaction is crafted with meticulous attention to detail. We don't just build software—we engineer excellence."
+            title: "Effervesco",
+            description: "To spark Passion, Curiosity, and Connection."
         },
         {
             icon: "🎯",
