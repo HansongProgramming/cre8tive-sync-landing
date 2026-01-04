@@ -15,10 +15,9 @@
 }
 
 .values__subtitle {
-  max-width: 720px;
+  max-width: 700px;
   margin: 1.5rem auto 0;
   font-family: "Roboto", sans-serif;
-  font-weight: 200;
   opacity: 0.8;
 }
 
@@ -26,46 +25,88 @@
 
 .wheel-wrapper {
   position: relative;
-  width: 600px;
-  height: 600px;
+  width: 640px;
+  height: 640px;
   margin: 0 auto;
 }
 
 .wheel {
-  width: 100%;
-  height: 100%;
-  position: relative;
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.wheel-item {
+/* ===== Cards ===== */
+
+.wheel-card {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform-origin: center center;
-  text-align: center;
-  width: 140px;
-  margin-left: -70px;
-  margin-top: -70px;
-  opacity: 0.6;
+  width: 150px;
+  padding: 1.5rem;
+  transform-origin: center;
+  margin-left: -75px;
+  margin-top: -75px;
+
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  opacity: 0.45;
   transition: all 0.6s ease;
 }
 
-.wheel-item img {
-  width: 72px;
+.wheel-card img {
+  width: 64px;
   margin-bottom: 0.75rem;
 }
 
-.wheel-item span {
+.wheel-card span {
   font-family: "Roboto", sans-serif;
   font-size: 0.85rem;
-  letter-spacing: 0.08rem;
+  letter-spacing: 0.1rem;
 }
 
-.wheel-item.active {
+.wheel-card.active {
   opacity: 1;
   transform: scale(1.15);
+}
+
+/* ===== Center Card ===== */
+
+.center-card {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: 260px;
+  padding: 2.5rem;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 5;
+}
+
+.center-card img {
+  width: 72px;
+  margin-bottom: 1rem;
+}
+
+.center-card h3 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  margin-bottom: 0.75rem;
+}
+
+.center-card p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
+  font-size: 0.95rem;
+  opacity: 0.75;
+  line-height: 1.6;
 }
 
 /* ===== Arrows ===== */
@@ -78,7 +119,7 @@
   border: none;
   cursor: pointer;
   opacity: 0.8;
-  transition: opacity 0.3s ease;
+  z-index: 10;
 }
 
 .wheel-arrow:hover {
@@ -86,11 +127,11 @@
 }
 
 .wheel-arrow.left {
-  left: -90px;
+  left: -100px;
 }
 
 .wheel-arrow.right {
-  right: -90px;
+  right: -100px;
 }
 
 .wheel-arrow img {
@@ -101,19 +142,16 @@
 
 @media (max-width: 768px) {
   .wheel-wrapper {
-    width: 360px;
-    height: 360px;
+    width: 380px;
+    height: 380px;
   }
 
-  .wheel-item {
-    transform: rotate(var(--angle)) translateY(-160px);
+  .wheel-card {
+    width: 120px;
   }
 
-  .wheel-arrow.left {
-    left: -50px;
-  }
-
-  .wheel-arrow.right {
-    right: -50px;
+  .center-card {
+    width: 220px;
+    padding: 2rem;
   }
 }
