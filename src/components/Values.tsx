@@ -3,34 +3,44 @@ import "./Values.css";
 const Values: React.FC = () => {
     const values = [
         {
-            icon: "⚙️",
+            image: "/public/Effervesco.svg",
             title: "Effervesco",
             description: "To spark Passion, Curiosity, and Connection."
         },
         {
-            icon: "🎯",
-            title: "Long-Term Thinking",
-            description: "We design for sustainability and scalability. Our solutions are built to evolve with your business, not become obsolete in a year."
+            image: "/public/Veritas.svg",
+            title: "Veritas",
+            description: "To stay grounded in Truth, Trust, and Purpose."
         },
         {
-            icon: "👤",
-            title: "Human-Centered Design",
-            description: "Technology should serve people, not complicate their lives. We create intuitive experiences that feel natural and empowering."
+            image: "/public/Consocio.svg",
+            title: "Consocio",
+            description: "To honor collaboration, unity, and shared effort."
         },
         {
-            icon: "🚀",
-            title: "Innovation First",
-            description: "We stay ahead of the curve, constantly exploring emerging technologies and methodologies to deliver cutting-edge solutions."
+            image: "/public/Modulor.svg",
+            title: "Modulor",
+            description: "To work with grace rhythm and ease."
         },
         {
-            icon: "🤝",
-            title: "Collaborative Partnership",
-            description: "Your success is our success. We work alongside you as a true partner, transparent and committed to achieving your goals."
+            image: "/public/Fingo.svg",
+            title: "Fingo",
+            description: "To build boldly, shape ideas, and face challenge."
         },
         {
-            icon: "🔒",
-            title: "Security by Design",
-            description: "Protection isn't an afterthought. We build security into every layer of our solutions from the ground up."
+            image: "/public/Resono.svg",
+            title: "Resono",
+            description: "To leave a lasting impact, resonating beyond the moment."
+        },
+                {
+            image: "/public/Micare.svg",
+            title: "Micare",
+            description: "To find light, hope, and potential in the smallest places."
+        },
+                {
+            image: "/public/Proficio.svg",
+            title: "Proficio",
+            description: "To grow with intention, creativity, and care."
         }
     ];
 
@@ -47,7 +57,7 @@ const Values: React.FC = () => {
                 <div className="values__grid">
                     {values.map((value, index) => (
                         <div key={index} className="value-card">
-                            <div className="value-card__icon">{value.icon}</div>
+                            <img src={value.image} alt="" />
                             <h3 className="value-card__title">{value.title}</h3>
                             <p className="value-card__description">{value.description}</p>
                         </div>
