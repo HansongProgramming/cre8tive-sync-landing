@@ -40,9 +40,10 @@
 .arc-card {
   position: absolute;
   top: 5%;
-  left: 40%;
+  left: 32%;
 
-  width: 260px;
+  width: 400px;
+  height: 315px;
   padding: 2rem;
 
   background: rgba(255, 255, 255, 0.06);
@@ -51,8 +52,8 @@
   backdrop-filter: blur(18px);
 
   transform:
-    translateX(calc(var(--offset) * 300px))
-    translateY(calc(-220px + abs(var(--offset)) * 105px))
+    translateX(calc(var(--offset) * 400px))
+    translateY(calc(-220px + abs(var(--offset)) * 100px))
     rotate(calc(var(--offset) * 16deg))
     scale(calc(1 - abs(var(--offset)) * 0.12));
 
@@ -63,7 +64,7 @@
 }
 
 .arc-card img {
-  width: 80px;
+  width: 150px;
   margin-bottom: 1rem;
 }
 
