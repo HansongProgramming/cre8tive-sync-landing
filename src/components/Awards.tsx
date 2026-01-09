@@ -4,39 +4,21 @@ const Awards: React.FC = () => {
     const awards = [
         {
             year: "2025",
-            title: "Innovation Excellence Award",
-            organization: "Tech Innovation Council",
+            title: "3rd Place - Philippine Startup Challenge X",
+            organization: "DICT - CAR",
             description: "Recognized for groundbreaking work in AI-driven automation solutions"
         },
         {
             year: "2025",
-            title: "Best Digital Experience",
-            organization: "UX Design Awards",
+            title: "Community Impact Award - AIdeas",
+            organization: "DICT - CAR",
             description: "Awarded for creating exceptional user experiences across multiple platforms"
         },
         {
-            year: "2024",
-            title: "Engineering Excellence",
-            organization: "Software Engineering Institute",
+            year: "2025",
+            title: "Champion - Techno Demo Day 9",
+            organization: "UC - INTTO",
             description: "Honored for architectural innovation and code quality standards"
-        },
-        {
-            year: "2024",
-            title: "Community Impact Award",
-            organization: "Tech for Good Foundation",
-            description: "Celebrated for developing technology solutions that benefit underserved communities"
-        },
-        {
-            year: "2024",
-            title: "Startup of the Year",
-            organization: "Digital Business Awards",
-            description: "Recognized as a leading emerging technology company"
-        },
-        {
-            year: "2023",
-            title: "Champion Award",
-            organization: "Industry Leaders Forum",
-            description: "Acknowledged for exceptional client satisfaction and project delivery"
         }
     ];
 

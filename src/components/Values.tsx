@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import "./Values.css";
 
 const VALUES = [
-  { image: "/public/Modulor.svg", title: "Modulor", description: "To work with grace, rhythm, and ease." },
-  { image: "/public/Fingo.svg", title: "Fingo", description: "To spark Passion, Curiosity, and Connection." },
-  { image: "/public/Effervesco.svg", title: "Effervesco", description: "To spark Passion, Curiosity, and Connection." },
-  { image: "/public/Veritas.svg", title: "Veritas", description: "To stay grounded in Truth, Trust, and Purpose." },
-  { image: "/public/Resono.svg", title: "Resono", description: "To leave a lasting impact, resonating beyond the moment." }
+  { image: "/Modulor.svg", title: "Modulor", description: "To work with grace, rhythm, and ease." },
+  { image: "/Fingo.svg", title: "Fingo", description: "To spark Passion, Curiosity, and Connection." },
+  { image: "/Effervesco.svg", title: "Effervesco", description: "To spark Passion, Curiosity, and Connection." },
+  { image: "/Veritas.svg", title: "Veritas", description: "To stay grounded in Truth, Trust, and Purpose." },
+  { image: "/Resono.svg", title: "Resono", description: "To leave a lasting impact, resonating beyond the moment." }
 ];
 
 const EXTENDED = [...VALUES, ...VALUES, ...VALUES];
@@ -48,7 +48,7 @@ const Values = () => {
 
       <div className="arc-wrapper">
         <button className="arrow left" onClick={prev}>
-          <img src="/public/Title_Left.svg" />
+          <img src="/Title_Left.svg" />
         </button>
 
         <div className="arc">
@@ -71,7 +71,7 @@ const Values = () => {
         </div>
 
         <button className="arrow right" onClick={next}>
-          <img src="/public/Title_Right.svg" />
+          <img src="/Title_Right.svg" />
         </button>
       </div>
     </section>
