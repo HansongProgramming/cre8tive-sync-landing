@@ -31,7 +31,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -10%);
-  width: 1100px;
+  width: 1000px;
   height: 500px;
 }
 
@@ -41,8 +41,8 @@
   position: absolute;
   top: 5%;
   left: 32%;
-
-  width: 400px;
+  font-family: poppins, sans-serif;
+  width: 300px;
   height: 315px;
   padding: 2rem;
 
@@ -52,12 +52,12 @@
   backdrop-filter: blur(18px);
 
   transform:
-    translateX(calc(var(--offset) * 400px))
-    translateY(calc(-220px + abs(var(--offset)) * 100px))
-    rotate(calc(var(--offset) * 16deg))
-    scale(calc(1 - abs(var(--offset)) * 0.12));
+    translateX(calc(var(--offset) * 350px))
+    translateY(calc(-200px + abs(var(--offset)) * 50px))
+    rotate(calc(var(--offset) * 24deg))
+    scale(calc(1 - abs(var(--offset)) * 0.20));
 
-  opacity: calc(1 - abs(var(--offset)) * 0.25);
+  opacity: calc(1 - abs(var(--offset)) * 0.40);
   transition:
     transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.9s ease;
