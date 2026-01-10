@@ -49,7 +49,7 @@
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(2px);
 
   transform:
     translateX(calc(var(--offset) * 350px))
@@ -57,7 +57,7 @@
     rotate(calc(var(--offset) * 24deg))
     scale(calc(1 - abs(var(--offset)) * 0.20));
 
-  opacity: calc(1 - abs(var(--offset)) * 0.40);
+  opacity: calc(1 - abs(var(--offset)) * 0.2);
   transition:
     transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.9s ease;
