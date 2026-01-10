@@ -6,7 +6,6 @@ import Awards from "./components/Awards";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
-
 const LandingPage: React.FC = () => {
   return (
     <div>
