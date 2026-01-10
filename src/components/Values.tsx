@@ -23,7 +23,6 @@ const Values = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // 🔁 Seamless re-centering (NO visual jump)
   useEffect(() => {
     if (index >= CENTER * 2) {
       setTimeout(() => setIndex(CENTER), 900);
@@ -37,7 +36,7 @@ const Values = () => {
   const prev = () => setIndex((i) => i - 1);
 
   return (
-    <section className="values">
+    <section id="values" className="values">
       <header className="values__header">
         <h2>Our Visions & Values</h2>
         <p>

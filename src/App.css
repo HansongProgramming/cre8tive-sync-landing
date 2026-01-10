@@ -36,13 +36,20 @@ body::before {
 }
 
 .header {
+  justify-self: center;
   color: white;
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-weight: 200;
-  padding: 1rem;
+  padding: 0.1rem;
   position: sticky;
-  top: 0;
+  top: 2%;
   z-index: 999;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  width: 70%;
+  height: fit-content;
 }
 
 .logo{
@@ -78,7 +85,6 @@ body::before {
   border-radius: 35px;
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
-  font-family: "Roboto";
   font-weight: 300;
   border: 1px solid white;
   box-shadow: rgba(0,0,0,0.5) 1px 2px 5px;
