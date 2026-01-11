@@ -10,12 +10,7 @@ const Projects: React.FC = () => {
                         Explore our portfolio of cutting-edge solutions built with precision and innovation
                     </p>
                 </div>
-                <div className="left">
-                    rats
-                </div>
-                <div className="right">
-                    cats
-                </div>
+
             </div>
         </section>
     );

@@ -26,7 +26,7 @@ const Awards: React.FC = () => {
         <section className="awards">
             <div className="awards__container">
                 <div className="awards__header">
-                    <h2 className="awards__title">Recognition & Awards</h2>
+                    <h2 className="awards__title">ReCOgNiTion & AWaRds</h2>
                     <p className="awards__subtitle">
                         Celebrating excellence and the trust our clients and industry peers place in us
                     </p>

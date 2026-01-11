@@ -58,7 +58,7 @@ const Contact: React.FC = () => {
                     <div className="contact__info">
                         <div className="contact__info-item">
                             <h3>Email</h3>
-                            <p>hello@cre8tivesync.online</p>
+                            <p>cre8tive.sync@gmail.com</p>
                         </div>
                         <div className="contact__info-item">
                             <h3>Location</h3>
