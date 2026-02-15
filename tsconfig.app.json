@@ -22,9 +22,11 @@
     "noFallthroughCasesInSwitch": false,
 
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
 }
+// Added ignoreDeprecations to silence baseUrl deprecation warning
