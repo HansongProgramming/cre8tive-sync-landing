@@ -15,24 +15,28 @@
 
 body {
   margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #000000;
+  background-image: url('/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Background layer */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
+/* Tablet view - show bottom part of portrait image */
+@media (min-width: 768px) {
+  body {
+    background-position: center 70%;
+  }
+}
 
-  background-image: url("/Background.png");
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: contain;
-
-  transform: scale(1.5); 
-  transform-origin: bottom center;
-
-  z-index: -1;
-  pointer-events: none;
+/* Desktop view - show bottom part of portrait image */
+@media (min-width: 1024px) {
+  body {
+    background-position: center 70%;
+  }
 }
 
 .header {
