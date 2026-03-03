@@ -7,20 +7,20 @@ interface Props {
 
 const LETTERS = "Loading".split("");
 
-// saturated spectral rays — sampled from the bg prism palette
+// spectral rays in natural rainbow order around the clock
 const PARTICLES = [
-  { angle: 0,   color: "#ffffff" },
-  { angle: 30,  color: "#ff2200" },   // deep red
-  { angle: 60,  color: "#ff8800" },   // orange
-  { angle: 90,  color: "#00ddff" },   // cyan
-  { angle: 120, color: "#7700ff" },   // indigo
-  { angle: 150, color: "#ff0066" },   // magenta
-  { angle: 180, color: "#ffffff" },
-  { angle: 210, color: "#00ff88" },   // green
-  { angle: 240, color: "#ffdd00" },   // yellow
-  { angle: 270, color: "#ff3300" },   // red-orange
-  { angle: 300, color: "#aa00ff" },   // violet
-  { angle: 330, color: "#00aaff" },   // sky blue
+  { angle: 0,   color: "#ff0000" },   // red
+  { angle: 30,  color: "#ff6600" },   // orange
+  { angle: 60,  color: "#ffdd00" },   // yellow
+  { angle: 90,  color: "#88ff00" },   // yellow-green
+  { angle: 120, color: "#00ff44" },   // green
+  { angle: 150, color: "#00ff88" },   // spring green
+  { angle: 180, color: "#00ddff" },   // cyan
+  { angle: 210, color: "#00aaff" },   // sky blue
+  { angle: 240, color: "#0055ff" },   // blue
+  { angle: 270, color: "#7700ff" },   // violet
+  { angle: 300, color: "#aa00ff" },   // purple
+  { angle: 330, color: "#ff0066" },   // magenta
 
   // inner ring — shorter white accent rays
   { angle: 15,  color: "#fff" },
@@ -59,39 +59,17 @@ const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
       {exploding && (
         <div className="explosion">
 
-          {/* 4-pointed cross-star burst */}
-          <svg
-            className="explosion__star"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
+          {/* hidden SVG — provides the star clip path */}
+          <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }} aria-hidden="true">
             <defs>
-              <radialGradient id="starGrad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%"   stopColor="#ffffff" stopOpacity="1"    />
-                <stop offset="20%"  stopColor="#ffffff" stopOpacity="0.98" />
-                <stop offset="34%"  stopColor="#ff2200" stopOpacity="0.95" />
-                <stop offset="48%"  stopColor="#ff9900" stopOpacity="0.88" />
-                <stop offset="62%"  stopColor="#00ddff" stopOpacity="0.78" />
-                <stop offset="76%"  stopColor="#7700ff" stopOpacity="0.55" />
-                <stop offset="90%"  stopColor="#ff0066" stopOpacity="0.30" />
-                <stop offset="100%" stopColor="#ff0066" stopOpacity="0"    />
-              </radialGradient>
-              <filter id="starGlow">
-                <feGaussianBlur stdDeviation="1.5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
+              <clipPath id="expl-star-clip" clipPathUnits="objectBoundingBox">
+                <path d="M 0.5 0 C 0.5 0.44 0.56 0.5 1 0.5 C 0.56 0.5 0.5 0.56 0.5 1 C 0.5 0.56 0.44 0.5 0 0.5 C 0.44 0.5 0.5 0.44 0.5 0 Z" />
+              </clipPath>
             </defs>
-            {/* curved cross-star: cubic bezier, perfect cusps at each tip */}
-            <path
-              d="M 50 0 C 50 44 56 50 100 50 C 56 50 50 56 50 100 C 50 56 44 50 0 50 C 44 50 50 44 50 0 Z"
-              fill="url(#starGrad)"
-              filter="url(#starGlow)"
-            />
           </svg>
+
+          {/* 4-pointed cross-star — conic rainbow sweeps around the arms */}
+          <div className="explosion__star" aria-hidden="true" />
 
           {/* supernova core */}
           <div className="explosion__core" />

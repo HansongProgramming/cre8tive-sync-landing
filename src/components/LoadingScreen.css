@@ -265,13 +265,26 @@
   position: fixed;
   left: 50%;
   top: 50%;
-  /* start at 0 size, centred */
   width: 140vmin;
   height: 140vmin;
   transform: translate(-50%, -50%) scale(0);
   transform-origin: center;
-  animation: expl-star 1.15s cubic-bezier(0.15, 0, 0.35, 1) forwards;
+  animation: expl-star 0.25s cubic-bezier(0.15, 0, 0.35, 1) forwards;
   pointer-events: none;
+  /* smooth spectral rainbow sweeping around each arm */
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,1)   0%,
+      rgba(255,255,255,0.85) 16%,
+      transparent           42%
+    ),
+    conic-gradient(from 0deg at center,
+      #ff0000  0deg,
+      #ff6600  45deg,
+      #ffee00  90deg,
+      #00ff44  135deg,
+    );
+  clip-path: url(#expl-star-clip);
 }
 
 @keyframes expl-star {
