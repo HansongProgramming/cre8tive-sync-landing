@@ -1,6 +1,10 @@
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import "./Awards.css";
 
 const Awards: React.FC = () => {
+    const headerRef = useScrollReveal<HTMLDivElement>();
+    const gridRef = useScrollReveal<HTMLDivElement>(0.1);
+
     const awards = [
         {
             year: "2025",
@@ -25,14 +29,14 @@ const Awards: React.FC = () => {
     return (
         <section className="awards">
             <div className="awards__container">
-                <div className="awards__header">
+                <div ref={headerRef} className="awards__header scroll-reveal">
                     <h2 className="awards__title">ReCOgNiTion & AWaRds</h2>
                     <p className="awards__subtitle">
                         Celebrating excellence and the trust our clients and industry peers place in us
                     </p>
                 </div>
 
-                <div className="awards__grid">
+                <div ref={gridRef} className="awards__grid scroll-reveal-stagger">
                     {awards.map((award, index) => (
                         <div key={index} className="award-card">
                             <div className="award-card__year">{award.year}</div>

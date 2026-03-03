@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import "./Contact.css";
 
 const Contact: React.FC = () => {
@@ -13,6 +14,8 @@ const Contact: React.FC = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const headerRef = useScrollReveal<HTMLDivElement>();
+    const contentRef = useScrollReveal<HTMLDivElement>(0.05);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({
@@ -47,14 +50,14 @@ const Contact: React.FC = () => {
     return (
         <section id="contact" className="contact">
             <div className="contact__container">
-                <div className="contact__header">
+                <div ref={headerRef} className="contact__header scroll-reveal">
                     <h2 className="contact__title">Start a Project</h2>
                     <p className="contact__subtitle">
                         Ready to bring your vision to life? Let's discuss how we can help you achieve your goals
                     </p>
                 </div>
 
-                <div className="contact__content">
+                <div ref={contentRef} className="contact__content scroll-reveal">
                     <div className="contact__info">
                         <div className="contact__info-item">
                             <h3>Email</h3>

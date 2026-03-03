@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import "./Values.css";
 
 const VALUES = [
@@ -14,6 +15,7 @@ const CENTER = VALUES.length;
 
 const Values = () => {
   const [index, setIndex] = useState(CENTER);
+  const headerRef = useScrollReveal<HTMLElement>();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -37,7 +39,7 @@ const Values = () => {
 
   return (
     <section id="values" className="values">
-      <header className="values__header">
+      <header ref={headerRef} className="values__header scroll-reveal">
         <h2>Our Visions & Values</h2>
         <p>
           Effervesco fuels momentum. It turns ideas into movement and brings
@@ -46,8 +48,8 @@ const Values = () => {
       </header>
 
       <div className="arc-wrapper">
-        <button className="arrow left" onClick={prev}>
-          <img src="/Title_Left.svg" />
+        <button className="arrow left" onClick={prev} aria-label="Previous value">
+          <img src="/Title_Left.svg" aria-hidden="true" alt="" />
         </button>
 
         <div className="arc">
@@ -61,7 +63,7 @@ const Values = () => {
                 className="arc-card"
                 style={{ "--offset": offset } as React.CSSProperties}
               >
-                <img src={v.image} />
+                <img src={v.image} alt={v.title} />
                 <h4>{v.title}</h4>
                 <p>{v.description}</p>
               </div>
@@ -69,8 +71,8 @@ const Values = () => {
           })}
         </div>
 
-        <button className="arrow right" onClick={next}>
-          <img src="/Title_Right.svg" />
+        <button className="arrow right" onClick={next} aria-label="Next value">
+          <img src="/Title_Right.svg" aria-hidden="true" alt="" />
         </button>
       </div>
     </section>

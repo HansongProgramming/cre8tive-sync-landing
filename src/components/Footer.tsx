@@ -1,13 +1,16 @@
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import "./Footer.css";
 
 const Footer: React.FC = () => {
+    const contentRef = useScrollReveal<HTMLDivElement>(0.05);
+
     return (
         <footer className="footer">
             <div className="footer__container">
-                <div className="footer__content">
+                <div ref={contentRef} className="footer__content scroll-reveal">
                     <div className="footer__brand">
                         <div className="footer__logo">
-                            <img src="/Cre8tiveSyncLogo.svg" alt="Creative Sync Logo" />
+                            <img src="/Cre8tiveSyncLogo.svg" alt="Cre8tive Sync Logo" />
                             <span>Cre8tive Sync</span>
                         </div>
                         <p className="footer__tagline">

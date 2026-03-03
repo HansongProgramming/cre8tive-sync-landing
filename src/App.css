@@ -10,7 +10,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* border: 1px solid red; */
 }
 
 body {
@@ -39,6 +38,68 @@ body {
   }
 }
 
+/* =========================
+   ANIMATIONS
+   ========================= */
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Scroll-reveal base state */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children reveal */
+.scroll-reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.scroll-reveal-stagger > *:nth-child(1) { transition: opacity 0.6s ease 0s,    transform 0.6s ease 0s; }
+.scroll-reveal-stagger > *:nth-child(2) { transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s; }
+.scroll-reveal-stagger > *:nth-child(3) { transition: opacity 0.6s ease 0.3s,  transform 0.6s ease 0.3s; }
+.scroll-reveal-stagger > *:nth-child(4) { transition: opacity 0.6s ease 0.45s, transform 0.6s ease 0.45s; }
+
+.scroll-reveal-stagger.revealed > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
 .header {
   justify-self: center;
   color: white;
@@ -54,9 +115,10 @@ body {
   backdrop-filter: blur(18px);
   width: 70%;
   height: fit-content;
+  transition: width 0.3s ease;
 }
 
-.logo{
+.logo {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -80,9 +142,26 @@ body {
 .header a {
   text-decoration: none;
   color: white;
+  position: relative;
 }
 
-.header button {
+/* Underline hover animation on nav links */
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: white;
+  transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+  width: 100%;
+}
+
+.header-cta {
   padding: 0.50rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
@@ -93,6 +172,94 @@ body {
   border: 1px solid white;
   box-shadow: rgba(0,0,0,0.5) 1px 2px 5px;
   letter-spacing: 0.05rem;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.header-cta:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: rgba(0,0,0,0.5) 2px 4px 10px, rgba(255,255,255,0.08) 0 0 20px;
+}
+
+/* Hamburger — hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger--open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger--open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile nav dropdown */
+.mobile-nav {
+  padding: 0.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeSlideUp 0.25s ease forwards;
+}
+
+.mobile-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.05rem;
+  display: block;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mobile-cta {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 35px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  border: 1px solid white;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.05rem;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-cta:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* =========================
@@ -113,11 +280,21 @@ body {
   text-align: center;
 }
 
-.hero_title_container{
+.hero_title_container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 3rem;
+  align-items: center;
+}
+
+.hero_title_container img {
+  animation: float 4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.hero_title_container img:last-child {
+  animation-delay: -2s;
 }
 
 .hero__title {
@@ -128,23 +305,25 @@ body {
   justify-self: center;
   font-family: "PrimorStylish";
   font-weight: 200;
+  animation: fadeSlideUp 0.8s ease both;
 }
 
 .hero__subtitle {
   font-size: 1.125rem;
-  line-height: 1.6;
   max-width: 720px;
   margin: 0 auto 2.5rem;
   font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 200;
   letter-spacing: 0.05rem;
-  line-height: 1.4rem;
+  line-height: 1.6;
+  animation: fadeSlideUp 0.8s 0.2s ease both;
 }
 
 .hero__actions {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  animation: fadeSlideUp 0.8s 0.4s ease both;
 }
 
 .hero__btn {
@@ -159,8 +338,82 @@ body {
   border: 1px solid white;
   box-shadow: rgba(0,0,0,0.5) 1px 2px 5px;
   letter-spacing: 0.05rem;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-.hero_awards{
+.hero__btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: rgba(0,0,0,0.5) 2px 6px 14px, rgba(255,255,255,0.08) 0 0 24px;
+}
+
+.hero__btn:active {
+  transform: translateY(-1px);
+}
+
+.hero_awards {
   padding-top: 8rem;
+  animation: fadeIn 1.2s 0.7s ease both;
+}
+
+/* =========================
+   MOBILE — Header & Hero
+   ========================= */
+
+@media (max-width: 768px) {
+  .header {
+    width: 92%;
+    border-radius: 18px;
+    top: 1.5%;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .header-cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hero mobile */
+  .hero_title_container {
+    gap: 0.75rem;
+  }
+
+  .hero_title_container img {
+    width: 28px;
+  }
+
+  .hero__title {
+    font-size: 2.6rem;
+    width: 100%;
+  }
+
+  .hero__subtitle {
+    font-size: 1rem;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero_awards {
+    padding-top: 4rem;
+  }
+
+  .hero_awards img {
+    width: 100%;
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 2rem;
+  }
 }
