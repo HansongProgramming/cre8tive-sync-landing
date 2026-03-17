@@ -21,13 +21,6 @@ const PARTICLES = [
   { angle: 300, color: "#fff" },
   { angle: 330, color: "#fff" },
 
-  // inner ring — shorter accent rays
-  { angle: 15,  color: "#fff" },
-  { angle: 75,  color: "#fff" },
-  { angle: 135, color: "#fff" },
-  { angle: 195, color: "#fff" },
-  { angle: 255, color: "#fff" },
-  { angle: 315, color: "#fff" },
 ];
 
 const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
@@ -36,8 +29,8 @@ const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
 
   useEffect(() => {
     const explodeTimer = setTimeout(() => setExploding(true), 3000);
-    const fadeTimer    = setTimeout(() => setFading(true),    3350);
-    const doneTimer    = setTimeout(() => onComplete(),        4300);
+    const fadeTimer    = setTimeout(() => setFading(true),    3200);
+    const doneTimer    = setTimeout(() => onComplete(),        3650);
     return () => {
       clearTimeout(explodeTimer);
       clearTimeout(fadeTimer);
@@ -82,7 +75,7 @@ const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
           {PARTICLES.map((p, i) => (
             <div
               key={i}
-              className={`explosion__particle${i >= 12 ? " explosion__particle--short" : ""}`}
+              className="explosion__particle"
               style={{ "--angle": `${p.angle}deg`, "--color": p.color } as React.CSSProperties}
             />
           ))}
