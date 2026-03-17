@@ -7,22 +7,21 @@ interface Props {
 
 const LETTERS = "Loading".split("");
 
-// spectral rays in natural rainbow order around the clock
 const PARTICLES = [
-  { angle: 0,   color: "#ff0000" },   // red
-  { angle: 30,  color: "#ff6600" },   // orange
-  { angle: 60,  color: "#ffdd00" },   // yellow
-  { angle: 90,  color: "#88ff00" },   // yellow-green
-  { angle: 120, color: "#00ff44" },   // green
-  { angle: 150, color: "#00ff88" },   // spring green
-  { angle: 180, color: "#00ddff" },   // cyan
-  { angle: 210, color: "#00aaff" },   // sky blue
-  { angle: 240, color: "#0055ff" },   // blue
-  { angle: 270, color: "#7700ff" },   // violet
-  { angle: 300, color: "#aa00ff" },   // purple
-  { angle: 330, color: "#ff0066" },   // magenta
+  { angle: 0,   color: "#fff" },
+  { angle: 30,  color: "#fff" },
+  { angle: 60,  color: "#fff" },
+  { angle: 90,  color: "#fff" },
+  { angle: 120, color: "#fff" },
+  { angle: 150, color: "#fff" },
+  { angle: 180, color: "#fff" },
+  { angle: 210, color: "#fff" },
+  { angle: 240, color: "#fff" },
+  { angle: 270, color: "#fff" },
+  { angle: 300, color: "#fff" },
+  { angle: 330, color: "#fff" },
 
-  // inner ring — shorter white accent rays
+  // inner ring — shorter accent rays
   { angle: 15,  color: "#fff" },
   { angle: 75,  color: "#fff" },
   { angle: 135, color: "#fff" },
