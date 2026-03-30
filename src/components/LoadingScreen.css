@@ -22,45 +22,9 @@
   pointer-events: none;
 }
 
-/* ---- scanlines ---- */
-.loading-screen__scanlines {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 3px,
-    rgba(0, 0, 0, 0.18) 3px,
-    rgba(0, 0, 0, 0.18) 4px
-  );
-  pointer-events: none;
-  z-index: 1;
-  animation: ls-scanmove 8s linear infinite;
-}
 
-@keyframes ls-scanmove {
-  from { background-position: 0 0; }
-  to   { background-position: 0 100px; }
-}
 
-/* ---- radial glow burst ---- */
-.loading-screen__glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 60% 55% at 50% 50%,
-    rgba(255, 255, 255, 0.07) 0%,
-    transparent 70%
-  );
-  animation: ls-glow-pulse 2.4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
 
-@keyframes ls-glow-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50%       { opacity: 1;   transform: scale(1.15); }
-}
 
 /* ---- inner content ---- */
 .loading-screen__inner {
@@ -246,137 +210,28 @@
   to   { opacity: 1; transform: translateY(0);    letter-spacing: 0.22rem; }
 }
 
-/* =============================================
-   EXPLOSION
-   ============================================= */
 
-.explosion {
+/* ---- simple growing circle ---- */
+
+.loading-screen__circle-outline {
   position: fixed;
-  /* centred exactly on the screen */
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 50%;
   pointer-events: none;
   z-index: 100;
+  opacity: 0;
+  animation: circle-grow 0.8s cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
-/* ---- curved cross-star burst ---- */
-.explosion__star {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  width: 140vmin;
-  height: 140vmin;
-  transform: translate(-50%, -50%) scale(0);
-  transform-origin: center;
-  animation: expl-star 0.25s cubic-bezier(0.15, 0, 0.35, 1) forwards;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at center,
-      rgba(255,255,255,1)   0%,
-      rgba(255,255,255,0.6) 20%,
-      transparent           50%
-    );
-  clip-path: url(#expl-star-clip);
-}
-
-@keyframes expl-star {
-  0%   { transform: translate(-50%, -50%) scale(0);    opacity: 1; }
-  15%  { transform: translate(-50%, -50%) scale(0.35); opacity: 1; }
-  40%  { transform: translate(-50%, -50%) scale(0.9);  opacity: 0.9; }
-  70%  { transform: translate(-50%, -50%) scale(1.5);  opacity: 0.4; }
-  100% { transform: translate(-50%, -50%) scale(2.5);  opacity: 0; }
-}
-
-/* ---- supernova core (tiny sphere → big bloom) ---- */
-.explosion__core {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  margin: -8px 0 0 -8px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.5) 60%, transparent 100%);
-  animation: expl-core 0.7s ease-out forwards;
-}
-
-@keyframes expl-core {
-  0%   { transform: scale(1);  opacity: 1; box-shadow: 0 0 0    0   rgba(255,255,255,1); }
-  40%  { transform: scale(12); opacity: 1; box-shadow: 0 0 30px 15px rgba(255,255,255,0.6); }
-  100% { transform: scale(28); opacity: 0; box-shadow: 0 0 40px 20px rgba(255,255,255,0); }
-}
-
-/* ---- expanding rings ---- */
-.explosion__ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  animation: expl-ring 1.1s ease-out forwards;
-}
-
-.explosion__ring--1 {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 0 6px 2px rgba(255,255,255,0.35);
-  animation-duration: 0.9s;
-  animation-delay: 0s;
-}
-
-.explosion__ring--2 {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 0 8px 2px rgba(255,255,255,0.3);
-  animation-duration: 1.1s;
-  animation-delay: 0.08s;
-}
-
-.explosion__ring--3 {
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 8px 2px rgba(255,255,255,0.2);
-  animation-duration: 1.3s;
-  animation-delay: 0.18s;
-}
-
-@keyframes expl-ring {
-  0%   { transform: translate(-50%, -50%) scale(0);   opacity: 1; }
-  70%  { opacity: 0.6; }
-  100% { transform: translate(-50%, -50%) scale(28);  opacity: 0; }
-}
-
-/* ---- particle rays ---- */
-.explosion__particle {
-  position: absolute;
-  left: calc(50% - 2.5px);
-  top: calc(50% - 8px);
-  width: 5px;
-  height: 22px;
-  border-radius: 3px;
-  background: var(--color);
-  box-shadow: 0 0 6px 2px rgba(255,255,255,0.5);
-  transform-origin: center bottom;
-  animation: expl-particle 1.0s cubic-bezier(0.1, 0, 0.3, 1) forwards;
-}
-
-@keyframes expl-particle {
-  0%   {
-    transform: rotate(var(--angle)) translateY(0px) scaleY(1);
-    opacity: 1;
-  }
-  20%  {
-    transform: rotate(var(--angle)) translateY(-30px) scaleY(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: rotate(var(--angle)) translateY(-340px) scaleY(0.15);
-    opacity: 0;
-  }
+@keyframes circle-grow {
+  0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(6); opacity: 0; }
 }
 
 /* ---- mobile ---- */
