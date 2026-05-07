@@ -476,7 +476,7 @@ export default function BlackholeBackground({ started }: Props) {
     const PAN_START    = ZOOM_DURATION + 0.3; // small pause before pan
     const PAN_DURATION = 4.0;
     const PAN_PITCH_TARGET = 0.12;
-    const PAN_YAW_TARGET   = -0.40;
+    const PAN_YAW_TARGET   = -0.45;
     let panApplied = false;
     let panStartPitch = 0;
     let panStartYaw   = 0;

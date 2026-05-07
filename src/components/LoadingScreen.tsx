@@ -38,34 +38,29 @@ const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
       <div className="ls__shockwave" />
 
       <div className={`ls__content ls__content--${phase}`}>
-        <div className={`ls__rocket-wrap ls__rocket-wrap--${phase}`}>
-          <div className="ls__flame" />
-          <svg
-            className="ls__rocket"
-            viewBox="0 0 48 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        <div className="ls__launch-scene">
+          <div className={`ls__rocket-wrap ls__rocket-wrap--${phase}`}>
+            <div className="ls__flame" />
+            <img
+              src="/rocket.svg"
+              className="ls__rocket"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
+          <img
+            src="/dock.svg"
+            className="ls__dock"
+            alt=""
             aria-hidden="true"
-          >
-            <path
-              d="M24 4 C14 4 8 20 8 36 L8 56 L24 62 L40 56 L40 36 C40 20 34 4 24 4Z"
-              fill="#1a1a1a"
-            />
-            <path
-              d="M24 4 C20 4 16 10 14 18 L34 18 C32 10 28 4 24 4Z"
-              fill="#333"
-            />
-            <circle cx="24" cy="32" r="5" fill="#e8e8e8" stroke="#555" strokeWidth="1.5" />
-            <circle cx="24" cy="32" r="3" fill="#c0d8f0" />
-            <path d="M8 48 L2 60 L8 56 Z" fill="#222" />
-            <path d="M40 48 L46 60 L40 56 Z" fill="#222" />
-            <rect x="19" y="60" width="10" height="6" rx="2" fill="#444" />
-          </svg>
+          />
         </div>
 
-        <p className="ls__label">
-          {phase === 'idle' ? 'Press to Launch' : phase === 'charging' ? 'Launching…' : ''}
-        </p>
+        {(phase === 'idle' || phase === 'charging') && (
+          <button className={`ls__btn ls__btn--${phase}`} disabled={phase === 'charging'}>
+            {phase === 'idle' ? 'Launch' : 'Launching…'}
+          </button>
+        )}
       </div>
     </div>
   );

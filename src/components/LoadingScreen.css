@@ -165,30 +165,76 @@
   100% { transform: scale(0)    rotate(-130deg) translateY(35px); opacity: 0; }
 }
 
-/* ---- label ---- */
-.ls__label {
+/* ---- isometric launch button ---- */
+/*
+  Three visible faces of an isometric box:
+    Front face  — the button face itself (background + border)
+    Bottom face — ::before, a parallelogram pulled down-left
+    Right face  — ::after,  a parallelogram pulled down-right
+*/
+.ls__btn {
+  position: relative;
+  display: inline-block;
+  padding: 0.55rem 1.6rem;
   font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.18rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
   text-transform: uppercase;
   color: #1a1a1a;
-  min-height: 1.4em;
-  transition: opacity 0.2s ease;
+  background: #f5f3ef;          /* same as loading screen bg — looks cut from the plane */
+  border: 1.5px solid #0c0c0c;
+  cursor: pointer;
+  user-select: none;
+  /* isometric depth: shift the face up+left so the shadow sides show below-right */
+  transform: translate(-5px, -8px);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  /* flat shadow that mimics isometric depth faces */
+  box-shadow:
+    1px  1px 0 #0c0c0c,   /* step 1 */
+    2px  2px 0 #0c0c0c,
+    3px  3px 0 #0c0c0c,
+    4px  4px 0 #0c0c0c,
+    5px  5px 0 #0c0c0c,   /* bottom-right corner = visible depth */
+    6px  6px 0 #0c0c0c,
+    7px  7px 0 #0c0c0c,
+    8px  8px 0 #0c0c0c;
 }
 
-/* ---- rocket wrapper ---- */
-.ls__rocket-wrap {
+.ls__btn:hover {
+  transform: translate(-3px, -5px);
+  box-shadow:
+    1px  1px 0 #0c0c0c,
+    2px  2px 0 #0c0c0c,
+    3px  3px 0 #0c0c0c,
+    4px  4px 0 #0c0c0c,
+    5px  5px 0 #0c0c0c;
+}
+
+.ls__btn--charging,
+.ls__btn:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+  cursor: default;
+}
+
+/* ---- launch scene: dock is the size reference, rocket overlays it ---- */
+.ls__launch-scene {
   position: relative;
+  display: inline-block; /* shrink-wraps to dock size */
+}
+
+/* ---- rocket wrapper: overlaid on dock, tune left/top to position ---- */
+.ls__rocket-wrap {
+  position: absolute;
+  left: -30px;  /* ← adjust this to slide rocket left/right */
+  bottom: 0;   /* ← adjust this to slide rocket up/down from dock base */
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 48px;
+  z-index: 2;
 }
 
-.ls__rocket-wrap--idle {
-  animation: ls-float 2.6s ease-in-out infinite;
-}
 
 .ls__rocket-wrap--charging {
   animation: ls-charge 0.07s linear infinite;
@@ -217,7 +263,7 @@
   100% { transform: translateX(0)    translateY(0)    rotate(0); }
 }
 
-/* fast launch — rocket streaks up, leaving a motion trail effect via scaleY */
+/* fast launch — rocket streaks up */
 @keyframes ls-launch {
   0%   { transform: translateY(0)       scaleX(1)    scaleY(1);   opacity: 1; }
   15%  { transform: translateY(-20px)   scaleX(0.88) scaleY(1.3); opacity: 1; }
@@ -225,21 +271,31 @@
   100% { transform: translateY(-140vh)  scaleX(0.6)  scaleY(2.2); opacity: 0; }
 }
 
-/* ---- rocket SVG ---- */
+/* ---- rocket image ---- */
 .ls__rocket {
-  width: 48px;
-  height: 80px;
+  width: 52px;
+  height: auto;
   position: relative;
   z-index: 2;
+  display: block;
 }
 
-/* ---- flame ---- */
+/* ---- dock image ---- */
+.ls__dock {
+  width: 46px;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- flame — sits below the rocket body ---- */
 .ls__flame {
   position: absolute;
   bottom: -18px;
   left: 50%;
   transform: translateX(-50%);
-  width: 14px;
+  width: 18px;
   height: 0;
   border-radius: 0 0 50% 50%;
   background: linear-gradient(to bottom, #ff9500, #ff4500, transparent);
@@ -249,13 +305,13 @@
 }
 
 .ls__rocket-wrap--charging .ls__flame {
-  height: 32px;
+  height: 36px;
   opacity: 1;
   animation: ls-flame-flicker 0.09s linear infinite;
 }
 
 .ls__rocket-wrap--launch .ls__flame {
-  height: 54px;
+  height: 60px;
   opacity: 1;
   animation: ls-flame-flicker 0.05s linear infinite;
 }
@@ -270,5 +326,7 @@
 /* ---- mobile ---- */
 @media (max-width: 480px) {
   .ls__label { font-size: 0.85rem; }
-  .ls__rocket { width: 40px; height: 66px; }
+  .ls__rocket { width: 42px; }
+  .ls__dock   { width: 38px; }
+  .ls__btn    { font-size: 0.7rem; padding: 0.45rem 1.2rem; }
 }
