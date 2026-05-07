@@ -16,9 +16,9 @@ const LandingPage: React.FC = () => {
     <div>
       <BlackholeBackground />
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-      <Header />
+      <Header loaded={!loading} />
       <main>
-        <Hero />
+        <Hero loaded={!loading} />
         <Values />
         <Projects />
         <Awards />

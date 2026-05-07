@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Header: React.FC = () => {
+interface Props {
+  loaded: boolean;
+}
+
+const Header: React.FC<Props> = ({ loaded }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    if (!loaded) return;
+    const t = setTimeout(() => setRevealed(true), 3200);
+    return () => clearTimeout(t);
+  }, [loaded]);
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="header">
+    <header className={`header${revealed ? ' header--revealed' : ''}`}>
       <nav>
         <div className="logo">
           <img src="/Cre8tiveSyncLogo.svg" alt="Cre8tive Sync Logo" />

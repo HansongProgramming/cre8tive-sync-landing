@@ -457,6 +457,16 @@ export default function BlackholeBackground() {
     };
     window.addEventListener('resize', handleResize);
 
+    // --- Cinematic intro pan (starts at 3s, runs for 4s) ---
+    const PAN_START = 3.0;
+    const PAN_DURATION = 4.0;
+    // Flipped from previous attempt: these signs push the blackhole to bottom-left
+    const PAN_PITCH_TARGET = 0.22;
+    const PAN_YAW_TARGET = -0.18;
+    let panApplied = false;
+    let panStartPitch = 0;
+    let panStartYaw = 0;
+
     // --- Animation loop ---
     let animId: number;
     let lastFrame = Date.now();
@@ -468,6 +478,21 @@ export default function BlackholeBackground() {
       const delta = Math.min((now - lastFrame) / 1000, 0.1); // cap delta to avoid big jumps
       lastFrame = now;
       time += delta;
+
+      // Cinematic pan: ease-in-out over PAN_DURATION seconds starting at PAN_START
+      if (time >= PAN_START && time <= PAN_START + PAN_DURATION) {
+        if (!panApplied) {
+          panStartPitch = pitch;
+          panStartYaw = yaw;
+          panApplied = true;
+        }
+        const t = (time - PAN_START) / PAN_DURATION;
+        // Smooth ease-in-out
+        const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        pitch = panStartPitch + PAN_PITCH_TARGET * ease;
+        yaw = panStartYaw + PAN_YAW_TARGET * ease;
+        setDirection(pitch, yaw);
+      }
 
       updateObserver(delta);
       updateDragControls();

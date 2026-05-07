@@ -1,14 +1,28 @@
-const Hero: React.FC = () => {
+import { useEffect, useState } from 'react';
+
+interface Props {
+  loaded: boolean;
+}
+
+const Hero: React.FC<Props> = ({ loaded }) => {
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    if (!loaded) return;
+    const t = setTimeout(() => setRevealed(true), 3000);
+    return () => clearTimeout(t);
+  }, [loaded]);
+
   return (
     <section className="hero">
-      <div className="hero__inner">
+      <div className={`hero__inner${revealed ? ' hero__inner--revealed' : ''}`}>
         <div className="hero_title_container">
-        <img src="/Title_Left.svg" aria-hidden="true" alt="" />
-        <h1 className="hero__title">
-          Be Creative
-          StaRt The SynC
-        </h1>
-        <img src="/Title_Right.svg" aria-hidden="true" alt="" />
+          <img src="/Title_Left.svg" aria-hidden="true" alt="" />
+          <h1 className="hero__title">
+            Be Creative
+            StaRt The SynC
+          </h1>
+          <img src="/Title_Right.svg" aria-hidden="true" alt="" />
         </div>
         <p className="hero__subtitle">
           We engineer custom software, autonomous AI, immersive AR, and advanced

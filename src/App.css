@@ -98,6 +98,11 @@ body {
   width: 70%;
   height: fit-content;
   transition: width 0.3s ease;
+  opacity: 0;
+}
+
+.header--revealed {
+  animation: fadeIn 1.0s ease forwards;
 }
 
 .logo {
@@ -273,6 +278,11 @@ body {
 .hero_title_container img {
   animation: float 4s ease-in-out infinite;
   flex-shrink: 0;
+  opacity: 0;
+}
+
+.hero__inner--revealed .hero_title_container img {
+  animation: float 4s ease-in-out infinite, fadeIn 1.4s 0s ease forwards;
 }
 
 .hero_title_container img:last-child {
@@ -287,7 +297,12 @@ body {
   justify-self: center;
   font-family: "PrimorStylish";
   font-weight: 200;
-  animation: fadeSlideUp 0.8s ease both;
+  opacity: 0;
+  transform: translateY(32px);
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.9),
+    0 4px 32px rgba(0, 0, 0, 0.7),
+    0 0 60px rgba(0, 0, 0, 0.5);
 }
 
 .hero__subtitle {
@@ -298,14 +313,35 @@ body {
   font-weight: 200;
   letter-spacing: 0.05rem;
   line-height: 1.6;
-  animation: fadeSlideUp 0.8s 0.2s ease both;
+  opacity: 0;
+  transform: translateY(32px);
 }
 
 .hero__actions {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  animation: fadeSlideUp 0.8s 0.4s ease both;
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+.hero_awards {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+/* Staggered reveal when JS adds --revealed to hero__inner */
+.hero__inner--revealed .hero__title {
+  animation: fadeSlideUp 1.4s 0s ease forwards;
+}
+.hero__inner--revealed .hero__subtitle {
+  animation: fadeSlideUp 1.0s 0.4s ease forwards;
+}
+.hero__inner--revealed .hero__actions {
+  animation: fadeSlideUp 1.0s 0.8s ease forwards;
+}
+.hero__inner--revealed .hero_awards {
+  animation: fadeSlideUp 1.0s 1.1s ease forwards;
 }
 
 .hero__btn {
@@ -335,7 +371,6 @@ body {
 
 .hero_awards {
   padding-top: 8rem;
-  animation: fadeIn 1.2s 0.7s ease both;
 }
 
 /* =========================
