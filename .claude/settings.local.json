@@ -5,7 +5,8 @@
       "Bash(Select-Object Name, PSIsContainer)",
       "Bash(npm install *)",
       "PowerShell(Remove-Item -Recurse -Force \"d:\\\\Projekts\\\\Cre8Tive Sync\\\\cre8tive-sync-landing\\\\threejs-blackhole-master\" -Confirm:$false)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(npx tsc *)"
     ]
   }
 }

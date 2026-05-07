@@ -12,12 +12,128 @@
   justify-content: center;
   cursor: pointer;
   user-select: none;
-  transition: opacity 0.5s ease;
+  overflow: hidden;
 }
 
-.ls--fade {
+/* sucked phase: clip-path shrinks to an ellipse ring, then nothing */
+.ls--sucked {
+  animation: ls-overlay-ring 0.52s cubic-bezier(0.5, 0, 0.9, 0.8) forwards;
+}
+
+/* ::after traces a glowing ring edge that shrinks with the overlay */
+.ls--sucked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 180, 60, 0.9);
+  box-shadow: 0 0 18px 6px rgba(255, 160, 40, 0.7), 0 0 40px 12px rgba(255, 100, 20, 0.4);
+  transform: translate(-50%, -50%);
+  animation: ls-ring-edge 0.52s cubic-bezier(0.5, 0, 0.9, 0.8) forwards;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes ls-ring-edge {
+  0%   { width: 300vmax; height: 300vmax; opacity: 0; }
+  15%  { width: 76vmin;  height: 76vmin;  opacity: 0.8; }
+  55%  { width: 28vmin;  height: 28vmin;  opacity: 1; }
+  80%  { width: 10vmin;  height: 10vmin;  opacity: 0.8; }
+  100% { width: 0;       height: 0;       opacity: 0; }
+}
+
+/* ::before is the growing black-hole shadow that eats the center of the ring */
+.ls--sucked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #000 55%, transparent 100%);
+  transform: translate(-50%, -50%);
+  animation: ls-hole-grow 0.52s cubic-bezier(0.5, 0, 0.9, 0.8) forwards;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* shockwave phase: brief white flash expands and fades */
+.ls--shockwave {
+  clip-path: ellipse(0% 0% at 50% 50%);
+  animation: ls-overlay-flash 0.42s ease-out forwards;
+  pointer-events: none;
+}
+
+.ls--gone {
   opacity: 0;
   pointer-events: none;
+}
+
+/* outer ring collapses: full screen → tight circle → gone */
+@keyframes ls-overlay-ring {
+  0%   {
+    clip-path: circle(150vmax at 50% 50%);
+    filter: brightness(1);
+  }
+  30%  {
+    clip-path: circle(38vmin at 50% 50%);
+    filter: brightness(0.85);
+  }
+  65%  {
+    clip-path: circle(14vmin at 50% 50%);
+    filter: brightness(0.5);
+  }
+  85%  {
+    clip-path: circle(5vmin  at 50% 50%);
+    filter: brightness(0.2);
+  }
+  100% {
+    clip-path: circle(0vmin  at 50% 50%);
+    filter: brightness(0);
+  }
+}
+
+/* inner dark disk grows to meet the shrinking outer ring */
+@keyframes ls-hole-grow {
+  0%   { width: 0;      height: 0;      opacity: 0; }
+  20%  { width: 10vmin; height: 10vmin; opacity: 0.6; }
+  60%  { width: 22vmin; height: 22vmin; opacity: 1; }
+  100% { width: 30vmin; height: 30vmin; opacity: 1; }
+}
+
+@keyframes ls-overlay-flash {
+  0%   { clip-path: circle(0vmin    at 50% 50%); opacity: 1; background: #fff; filter: brightness(6); }
+  25%  { clip-path: circle(150vmax  at 50% 50%); opacity: 1; background: #fff; filter: brightness(3); }
+  65%  { clip-path: circle(150vmax  at 50% 50%); opacity: 0.35; }
+  100% { clip-path: circle(150vmax  at 50% 50%); opacity: 0; }
+}
+
+/* ---- shockwave ring ---- */
+.ls__shockwave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 24px 8px rgba(255, 200, 80, 0.7), inset 0 0 12px 4px rgba(255, 180, 60, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.ls--shockwave .ls__shockwave {
+  animation: ls-shockwave-expand 0.45s cubic-bezier(0.1, 0.6, 0.4, 1) forwards;
+}
+
+@keyframes ls-shockwave-expand {
+  0%   { transform: translate(-50%, -50%) scale(0);   opacity: 1; }
+  60%  { transform: translate(-50%, -50%) scale(14);  opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(22);  opacity: 0; }
 }
 
 /* ---- content wrapper ---- */
@@ -26,6 +142,27 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  transition: none;
+}
+
+/* content spirals into the black hole as the ring collapses */
+.ls__content--sucked {
+  position: relative;
+  z-index: 2; /* sits above the ::before dark hole */
+  animation: ls-content-suck 0.52s cubic-bezier(0.5, 0, 0.9, 0.8) forwards;
+}
+
+.ls__content--shockwave,
+.ls__content--gone {
+  opacity: 0;
+}
+
+@keyframes ls-content-suck {
+  0%   { transform: scale(1)    rotate(0deg)    translateY(0);    opacity: 1; }
+  25%  { transform: scale(0.65) rotate(-22deg)  translateY(8px);  opacity: 1; }
+  60%  { transform: scale(0.22) rotate(-70deg)  translateY(20px); opacity: 0.7; }
+  85%  { transform: scale(0.06) rotate(-110deg) translateY(30px); opacity: 0.2; }
+  100% { transform: scale(0)    rotate(-130deg) translateY(35px); opacity: 0; }
 }
 
 /* ---- label ---- */
@@ -37,10 +174,10 @@
   text-transform: uppercase;
   color: #1a1a1a;
   min-height: 1.4em;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
-/* ---- rocket wrapper — controls position + launch trajectory ---- */
+/* ---- rocket wrapper ---- */
 .ls__rocket-wrap {
   position: relative;
   display: flex;
@@ -49,23 +186,21 @@
   width: 48px;
 }
 
-/* idle: gentle float */
 .ls__rocket-wrap--idle {
   animation: ls-float 2.6s ease-in-out infinite;
 }
 
-/* charging: rapid shake */
 .ls__rocket-wrap--charging {
-  animation: ls-charge 0.08s linear infinite;
+  animation: ls-charge 0.07s linear infinite;
 }
 
-/* launch: blast straight up and off screen */
 .ls__rocket-wrap--launch {
-  animation: ls-launch 0.55s cubic-bezier(0.4, 0, 1, 1) forwards;
+  animation: ls-launch 0.42s cubic-bezier(0.3, 0, 0.8, 0.6) forwards;
 }
 
-/* fading: already gone, no animation needed */
-.ls__rocket-wrap--fading {
+.ls__rocket-wrap--sucked,
+.ls__rocket-wrap--shockwave,
+.ls__rocket-wrap--gone {
   opacity: 0;
 }
 
@@ -75,17 +210,19 @@
 }
 
 @keyframes ls-charge {
-  0%   { transform: translateX(-2px) translateY(1px); }
-  25%  { transform: translateX(2px)  translateY(-1px); }
-  50%  { transform: translateX(-1px) translateY(2px); }
-  75%  { transform: translateX(1px)  translateY(-2px); }
-  100% { transform: translateX(0)    translateY(0); }
+  0%   { transform: translateX(-3px) translateY(2px)  rotate(-1deg); }
+  25%  { transform: translateX(3px)  translateY(-2px) rotate(1deg); }
+  50%  { transform: translateX(-2px) translateY(3px)  rotate(-0.5deg); }
+  75%  { transform: translateX(2px)  translateY(-3px) rotate(0.5deg); }
+  100% { transform: translateX(0)    translateY(0)    rotate(0); }
 }
 
+/* fast launch — rocket streaks up, leaving a motion trail effect via scaleY */
 @keyframes ls-launch {
-  0%   { transform: translateY(0)      scaleX(1);    opacity: 1; }
-  20%  { transform: translateY(-30px)  scaleX(0.92); opacity: 1; }
-  100% { transform: translateY(-120vh) scaleX(0.85); opacity: 0; }
+  0%   { transform: translateY(0)       scaleX(1)    scaleY(1);   opacity: 1; }
+  15%  { transform: translateY(-20px)   scaleX(0.88) scaleY(1.3); opacity: 1; }
+  50%  { transform: translateY(-80vh)   scaleX(0.75) scaleY(1.8); opacity: 0.6; }
+  100% { transform: translateY(-140vh)  scaleX(0.6)  scaleY(2.2); opacity: 0; }
 }
 
 /* ---- rocket SVG ---- */
@@ -108,27 +245,25 @@
   background: linear-gradient(to bottom, #ff9500, #ff4500, transparent);
   opacity: 0;
   z-index: 1;
-  transition: height 0.25s ease, opacity 0.25s ease;
+  transition: height 0.2s ease, opacity 0.2s ease;
 }
 
-/* flame grows during charge */
 .ls__rocket-wrap--charging .ls__flame {
-  height: 28px;
+  height: 32px;
   opacity: 1;
-  animation: ls-flame-flicker 0.1s linear infinite;
+  animation: ls-flame-flicker 0.09s linear infinite;
 }
 
-/* flame at full blast during launch */
 .ls__rocket-wrap--launch .ls__flame {
-  height: 44px;
+  height: 54px;
   opacity: 1;
-  animation: ls-flame-flicker 0.06s linear infinite;
+  animation: ls-flame-flicker 0.05s linear infinite;
 }
 
 @keyframes ls-flame-flicker {
   0%   { transform: translateX(-50%) scaleX(1)    scaleY(1); }
-  33%  { transform: translateX(-50%) scaleX(1.15) scaleY(0.9); }
-  66%  { transform: translateX(-50%) scaleX(0.85) scaleY(1.1); }
+  33%  { transform: translateX(-50%) scaleX(1.2)  scaleY(0.88); }
+  66%  { transform: translateX(-50%) scaleX(0.82) scaleY(1.12); }
   100% { transform: translateX(-50%) scaleX(1)    scaleY(1); }
 }
 
