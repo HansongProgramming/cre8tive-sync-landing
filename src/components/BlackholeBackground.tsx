@@ -222,7 +222,7 @@ export default function BlackholeBackground() {
     // --- Post-processing ---
     const composer = new EffectComposer(renderer);
     const renderPass = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(128, 128), 0.1, 2.0, 0.0);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(128, 128), 0.3, 1.0, 0.0);
     const shaderPass = new ShaderPass(CopyShader);
     shaderPass.renderToScreen = true;
     composer.addPass(renderPass);
@@ -273,7 +273,7 @@ export default function BlackholeBackground() {
 
     // --- Observer state ---
     const INCLINE = -5 * Math.PI / 180;
-    const CAM_DISTANCE = 12;
+    const CAM_DISTANCE = 15;
     let theta = 0;
     let angularVelocity = 0;
     const maxAngularVelocity = 1 / Math.sqrt(2.0 * (CAM_DISTANCE - 1.0)) / CAM_DISTANCE;
@@ -314,6 +314,10 @@ export default function BlackholeBackground() {
     setDirection(pitch, yaw);
 
     // --- Mouse handlers ---
+    const onSelectStart = (e: Event) => {
+      if (dragging) e.preventDefault();
+    };
+
     const onMouseDown = (e: MouseEvent) => {
       // Only handle left button clicks that aren't on UI elements
       if (e.button !== 0) return;
@@ -394,6 +398,7 @@ export default function BlackholeBackground() {
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('selectstart', onSelectStart);
     renderer.domElement.addEventListener('dblclick', onDblClick);
     renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
     renderer.domElement.addEventListener('contextmenu', onContextMenu);
@@ -406,10 +411,10 @@ export default function BlackholeBackground() {
 
     const updateObserver = (delta: number) => {
       if (orbiting) {
-        if (angularVelocity < maxAngularVelocity * 0.35)
+        if (angularVelocity < maxAngularVelocity * 1)
           angularVelocity += delta / CAM_DISTANCE;
         else
-          angularVelocity = maxAngularVelocity * 0.35;
+          angularVelocity = maxAngularVelocity * 1;
       } else {
         if (angularVelocity > 0)
           angularVelocity -= delta / CAM_DISTANCE;
@@ -485,6 +490,7 @@ export default function BlackholeBackground() {
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('selectstart', onSelectStart);
       renderer.domElement.removeEventListener('dblclick', onDblClick);
       renderer.domElement.removeEventListener('wheel', onWheel);
       renderer.domElement.removeEventListener('contextmenu', onContextMenu);
