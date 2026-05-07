@@ -56,11 +56,13 @@ const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
           />
         </div>
 
-        {(phase === 'idle' || phase === 'charging') && (
-          <button className={`ls__btn ls__btn--${phase}`} disabled={phase === 'charging'}>
-            <img src="/launch.svg" className="ls__btn-img" alt="Launch" aria-label="Launch" />
-          </button>
-        )}
+        <button
+          className={`ls__btn ls__btn--${phase}`}
+          disabled={phase !== 'idle'}
+          style={{ visibility: (phase === 'idle' || phase === 'charging') ? 'visible' : 'hidden' }}
+        >
+          <img src="/launch.svg" className="ls__btn-img" alt="Launch" aria-label="Launch" />
+        </button>
       </div>
     </div>
   );

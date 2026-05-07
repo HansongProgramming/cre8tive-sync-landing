@@ -143,6 +143,7 @@
   align-items: center;
   gap: 2rem;
   transition: none;
+  position: relative;
 }
 
 /* content spirals into the black hole as the ring collapses */
@@ -173,10 +174,13 @@
     Right face  — ::after,  a parallelogram pulled down-right
 */
 .ls__btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-54%, -10%);
   display: block;
   padding: 0;
   background: none;
-  transform: translateY(-48%) translateX(-4%);
   border: none;
   cursor: pointer;
   user-select: none;
