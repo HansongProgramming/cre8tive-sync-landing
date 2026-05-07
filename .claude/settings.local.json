@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"d:\\\\Projekts\\\\Cre8Tive Sync\\\\cre8tive-sync-landing\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(npm install *)",
+      "PowerShell(Remove-Item -Recurse -Force \"d:\\\\Projekts\\\\Cre8Tive Sync\\\\cre8tive-sync-landing\\\\threejs-blackhole-master\" -Confirm:$false)",
+      "Bash(npm run *)"
+    ]
+  }
+}
