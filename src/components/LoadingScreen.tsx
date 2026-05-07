@@ -10,6 +10,10 @@ const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
 
   const handleLaunch = () => {
     if (phase !== 'idle') return;
+
+    const sfx = new Audio('/sfx.mp3');
+    sfx.play().catch(() => {});
+
     setPhase('charging');
 
     // charge shakes for 0.7s, then rocket blasts up
