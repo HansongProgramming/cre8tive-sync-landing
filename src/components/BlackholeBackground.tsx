@@ -222,7 +222,7 @@ export default function BlackholeBackground() {
     // --- Post-processing ---
     const composer = new EffectComposer(renderer);
     const renderPass = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(128, 128), 0.3, 1.0, 0.0);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(128, 128), 0.15, 1.0, 0.0);
     const shaderPass = new ShaderPass(CopyShader);
     shaderPass.renderToScreen = true;
     composer.addPass(renderPass);
@@ -273,7 +273,7 @@ export default function BlackholeBackground() {
 
     // --- Observer state ---
     const INCLINE = -5 * Math.PI / 180;
-    const CAM_DISTANCE = 15;
+    const CAM_DISTANCE = 18;
     let theta = 0;
     let angularVelocity = 0;
     const maxAngularVelocity = 1 / Math.sqrt(2.0 * (CAM_DISTANCE - 1.0)) / CAM_DISTANCE;
