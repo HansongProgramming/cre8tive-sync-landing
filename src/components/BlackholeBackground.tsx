@@ -200,8 +200,18 @@ void main() {
 }
 `;
 
-export default function BlackholeBackground() {
+interface Props {
+  started: boolean;
+}
+
+export default function BlackholeBackground({ started }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const startedRef = useRef(false);
+
+  // Keep ref in sync with prop without re-running the heavy setup effect
+  useEffect(() => {
+    startedRef.current = started;
+  }, [started]);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -475,8 +485,15 @@ export default function BlackholeBackground() {
     const animate = () => {
       animId = requestAnimationFrame(animate);
       const now = Date.now();
-      const delta = Math.min((now - lastFrame) / 1000, 0.1); // cap delta to avoid big jumps
+      const delta = Math.min((now - lastFrame) / 1000, 0.1);
       lastFrame = now;
+
+      // Don't advance scene time until loading screen is gone
+      if (!startedRef.current) {
+        composer.render();
+        return;
+      }
+
       time += delta;
 
       // Cinematic pan: ease-in-out over PAN_DURATION seconds starting at PAN_START

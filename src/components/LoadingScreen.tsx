@@ -1,75 +1,70 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./LoadingScreen.css";
 
 interface Props {
   onComplete: () => void;
 }
 
-const LETTERS = "Loading".split("");
-
-const PARTICLES = [
-  { angle: 0,   color: "#fff" },
-  { angle: 30,  color: "#fff" },
-  { angle: 60,  color: "#fff" },
-  { angle: 90,  color: "#fff" },
-  { angle: 120, color: "#fff" },
-  { angle: 150, color: "#fff" },
-  { angle: 180, color: "#fff" },
-  { angle: 210, color: "#fff" },
-  { angle: 240, color: "#fff" },
-  { angle: 270, color: "#fff" },
-  { angle: 300, color: "#fff" },
-  { angle: 330, color: "#fff" },
-
-];
-
 const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
+  const [phase, setPhase] = useState<'idle' | 'charging' | 'launch' | 'fading'>('idle');
 
-  const [fading, setFading] = useState(false);
-  const [showCircle, setShowCircle] = useState(false);
+  const handleLaunch = () => {
+    if (phase !== 'idle') return;
+    setPhase('charging');
 
-  useEffect(() => {
-    const circleTimer = setTimeout(() => setShowCircle(true), 3000);
-    const fadeTimer   = setTimeout(() => setFading(true),     3200);
-    const doneTimer   = setTimeout(() => onComplete(),        3650);
-    return () => {
-      clearTimeout(circleTimer);
-      clearTimeout(fadeTimer);
-      clearTimeout(doneTimer);
-    };
-  }, [onComplete]);
+    // after charge animation (0.9s), blast off
+    setTimeout(() => setPhase('launch'), 900);
 
+    // after rocket exits screen (0.6s of launch), fade the overlay
+    setTimeout(() => setPhase('fading'), 1500);
+
+    // once fade is done, tell parent — 3D scene + hero timers start NOW
+    setTimeout(() => onComplete(), 2000);
+  };
 
   return (
-    <div className={`loading-screen${fading ? " loading-screen--fade" : ""}`}>
+    <div
+      className={`ls${phase === 'fading' ? ' ls--fade' : ''}`}
+      onClick={phase === 'idle' ? handleLaunch : undefined}
+    >
+      <div className="ls__content">
+        <div className={`ls__rocket-wrap ls__rocket-wrap--${phase}`}>
+          {/* flame — visible during charge + launch */}
+          <div className="ls__flame" />
 
-      {/* simple growing circle outline */}
-      {showCircle && <div className="loading-screen__circle-outline" />}
-
-      <div className="loading-screen__inner">
-        {/* logo */}
-        <div className="loading-screen__logo-wrap">
-          <div className="loading-screen__logo-ring" />
-          <img src="/Cre8tiveSyncLogo.svg" alt="Cre8tive Sync" className="loading-screen__logo" />
+          {/* rocket SVG */}
+          <svg
+            className="ls__rocket"
+            viewBox="0 0 48 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            {/* body */}
+            <path
+              d="M24 4 C14 4 8 20 8 36 L8 56 L24 62 L40 56 L40 36 C40 20 34 4 24 4Z"
+              fill="#1a1a1a"
+            />
+            {/* nose cone */}
+            <path
+              d="M24 4 C20 4 16 10 14 18 L34 18 C32 10 28 4 24 4Z"
+              fill="#333"
+            />
+            {/* window */}
+            <circle cx="24" cy="32" r="5" fill="#e8e8e8" stroke="#555" strokeWidth="1.5" />
+            <circle cx="24" cy="32" r="3" fill="#c0d8f0" />
+            {/* left fin */}
+            <path d="M8 48 L2 60 L8 56 Z" fill="#222" />
+            {/* right fin */}
+            <path d="M40 48 L46 60 L40 56 Z" fill="#222" />
+            {/* nozzle */}
+            <rect x="19" y="60" width="10" height="6" rx="2" fill="#444" />
+          </svg>
         </div>
 
-        {/* letter-by-letter "Loading" */}
-        <p className="loading-screen__label" aria-label="Loading">
-          {LETTERS.map((ch, i) => (
-            <span key={i} className="loading-screen__letter" style={{ "--i": i } as React.CSSProperties}>
-              {ch}
-            </span>
-          ))}
+        <p className="ls__label">
+          {phase === 'idle' ? 'Press to Launch' : phase === 'charging' ? 'Launching…' : ''}
         </p>
-
-        {/* progress bar */}
-        <div className="loading-screen__bar-track">
-          <div className="loading-screen__bar">
-            <span className="loading-screen__spark" />
-          </div>
-        </div>
-
-        <p className="loading-screen__tagline">Powered by Innovation</p>
       </div>
     </div>
   );
