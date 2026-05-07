@@ -311,7 +311,7 @@ export default function BlackholeBackground({ started }: Props) {
     let lastTouchX = 0;
     let lastTouchY = 0;
     let lastPinchDist = 0;
-    let fov = 60.0;
+    let fov = 10.0; // starts super zoomed in (narrow FOV); zoom-out pulls to 60
     const FOV_MIN = 20;
     const FOV_MAX = 90;
 
@@ -467,15 +467,22 @@ export default function BlackholeBackground({ started }: Props) {
     };
     window.addEventListener('resize', handleResize);
 
-    // --- Cinematic intro pan (starts at 3s, runs for 4s) ---
-    const PAN_START = 3.0;
+    // --- Cinematic intro: zoom-out then pan ---
+    // Phase 1 — FOV zooms out: start tight (10°) → normal (60°) super fast
+    const FOV_START = 10.0;
+    const FOV_END   = 60.0;
+    const ZOOM_DURATION = 0.6;
+    // Phase 2 — pan to bottom-left, starts after zoom settles
+    const PAN_START    = ZOOM_DURATION + 0.3; // small pause before pan
     const PAN_DURATION = 4.0;
-    // Flipped from previous attempt: these signs push the blackhole to bottom-left
-    const PAN_PITCH_TARGET = 0.22;
-    const PAN_YAW_TARGET = -0.18;
+    const PAN_PITCH_TARGET = 0.12;
+    const PAN_YAW_TARGET   = -0.40;
     let panApplied = false;
     let panStartPitch = 0;
-    let panStartYaw = 0;
+    let panStartYaw   = 0;
+
+    // Ease-out quart: slams hard immediately then decelerates to rest.
+    const easeInOutCubic = (t: number) => 1 - Math.pow(1 - t, 4);
 
     // --- Animation loop ---
     let animId: number;
@@ -496,18 +503,25 @@ export default function BlackholeBackground({ started }: Props) {
 
       time += delta;
 
-      // Cinematic pan: ease-in-out over PAN_DURATION seconds starting at PAN_START
+      // Phase 1 — zoom-out: interpolate FOV from FOV_START → FOV_END
+      if (time <= ZOOM_DURATION) {
+        const t = time / ZOOM_DURATION;
+        fov = FOV_START + (FOV_END - FOV_START) * easeInOutCubic(t);
+      } else {
+        fov = FOV_END;
+      }
+
+      // Phase 2 — pan to bottom-left after zoom settles
       if (time >= PAN_START && time <= PAN_START + PAN_DURATION) {
         if (!panApplied) {
           panStartPitch = pitch;
-          panStartYaw = yaw;
-          panApplied = true;
+          panStartYaw   = yaw;
+          panApplied    = true;
         }
         const t = (time - PAN_START) / PAN_DURATION;
-        // Smooth ease-in-out
         const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
         pitch = panStartPitch + PAN_PITCH_TARGET * ease;
-        yaw = panStartYaw + PAN_YAW_TARGET * ease;
+        yaw   = panStartYaw   + PAN_YAW_TARGET   * ease;
         setDirection(pitch, yaw);
       }
 
