@@ -58,7 +58,7 @@ const LoadingScreen: React.FC<Props> = ({ onComplete }) => {
 
         {(phase === 'idle' || phase === 'charging') && (
           <button className={`ls__btn ls__btn--${phase}`} disabled={phase === 'charging'}>
-            {phase === 'idle' ? 'Launch' : 'Launching…'}
+            <img src="/launch.svg" className="ls__btn-img" alt="Launch" aria-label="Launch" />
           </button>
         )}
       </div>

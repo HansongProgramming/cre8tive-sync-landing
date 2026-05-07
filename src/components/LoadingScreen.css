@@ -173,49 +173,30 @@
     Right face  — ::after,  a parallelogram pulled down-right
 */
 .ls__btn {
-  position: relative;
-  display: inline-block;
-  padding: 0.55rem 1.6rem;
-  font-family: "Roboto", sans-serif;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.2rem;
-  text-transform: uppercase;
-  color: #1a1a1a;
-  background: #f5f3ef;          /* same as loading screen bg — looks cut from the plane */
-  border: 1.5px solid #0c0c0c;
+  display: block;
+  padding: 0;
+  background: none;
+  transform: translateY(-48%) translateX(-4%);
+  border: none;
   cursor: pointer;
   user-select: none;
-  /* isometric depth: shift the face up+left so the shadow sides show below-right */
-  transform: translate(-5px, -8px);
-  transition: transform 0.08s ease, box-shadow 0.08s ease;
-  /* flat shadow that mimics isometric depth faces */
-  box-shadow:
-    1px  1px 0 #0c0c0c,   /* step 1 */
-    2px  2px 0 #0c0c0c,
-    3px  3px 0 #0c0c0c,
-    4px  4px 0 #0c0c0c,
-    5px  5px 0 #0c0c0c,   /* bottom-right corner = visible depth */
-    6px  6px 0 #0c0c0c,
-    7px  7px 0 #0c0c0c,
-    8px  8px 0 #0c0c0c;
+  transition: opacity 0.08s ease, filter 0.08s ease;
 }
 
 .ls__btn:hover {
-  transform: translate(-3px, -5px);
-  box-shadow:
-    1px  1px 0 #0c0c0c,
-    2px  2px 0 #0c0c0c,
-    3px  3px 0 #0c0c0c,
-    4px  4px 0 #0c0c0c,
-    5px  5px 0 #0c0c0c;
+  filter: brightness(0.8);
 }
 
 .ls__btn--charging,
 .ls__btn:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  opacity: 0.5;
   cursor: default;
+}
+
+.ls__btn-img {
+  display: block;
+  width: 400px;
+  height: auto;
 }
 
 /* ---- launch scene: dock is the size reference, rocket overlays it ---- */
